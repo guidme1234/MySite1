@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>jQuery Dropdown Timepicker Plugin Examples</title>
+    <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.1.0/minty/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+    <script src="jquery-time-picker.js"></script>
+    <style>
+        body { background: #fafafa; }
+        .container { margin: 150px auto; }
+    </style>
+</head>
+
+<body>
+</div>
+    <div class="container">
+       
+	    <p class="lead"><b>Selected Time: </b><label id="timePickerValue"></label></p>
+	    <br>
+        <div id="timePicker" style="width: 20rem;"></div>
+        <br>
+		<button class="btn btn-primary" id="btnGetValue">Set Time</button>
+		<br><br>
+		<div id="timePickerAdd" style="width: 20rem;"></div>
+		<br>
+		<button class="btn btn-primary" id="btnSetValue">Add time</button>
+    </div>
+
+
+
+
+
+
+
+
+
+    <script>
+function zeroPad(num, places) {
+  var zero = places - num.toString().length + 1;
+  return Array(+(zero > 0 && zero)).join("0") + num;
+}
+        $(document).ready(function () {
+            $("#timePicker").timepicker({});
+			$("#timePickerAdd").timepicker({});
+			
+            $("#btnGetValue").click(function () {
+                $("#timePickerValue").html($("#timePicker").timepicker().getValue().replace('PM', '').replace('AM', ''));
+            });
+			
+			$("#btnGetValueAdd").click(function () {
+                $("#timePickerValue").html($("#timePickerAdd").timepicker().getValue());
+            });
+			
+			
+			
+            $("#btnSetValue").click(function () {
+			   
+				var add_hour = $('#timePickerAdd').find(".hours-dropdown")[0].value;
+				var add_min = $('#timePickerAdd').find(".minutes-dropdown")[0].value;
+				var t = $("#timePicker").timepicker().getValue();
+				//alert(t);
+				var a = t.split(":");
+				var hour = a[0];
+				var b = a[1].split(" ");
+				var minute = b[0];
+				var meridian = b[1];
+				hour = parseInt(hour) + parseInt(add_hour);
+				minute = parseInt(minute) + parseInt(add_min);
+				var d = new Date();
+				d.setHours(hour);
+				d.setMinutes(minute);
+				hour = d.getHours();
+				minute = d.getMinutes();
+				t = zeroPad(hour,2) + ":" + zeroPad(minute,2);
+				
+				//alert("after added: " + t);
+				
+               // $("#timePicker").timepicker().setValue(t);
+				$("#timePickerValue").html(t);
+            });
+
+            $("#timePicker3").timepicker({
+                onChange: function (value) {
+                    //alert(value);
+					//$("#timePickerValue").html($("#timePicker").timepicker().getValue());
+                }
+            });
+
+            $("#basicTimepickerHTML").text('<div id="timePicker" style="width: 20rem;"></div>');
+            $("#basicTimepickerJS").text('$("#timePicker").timepicker({});');
+            $("#basicTimepickerJS1").text('$("#timePicker").timepicker().getValue();');
+            $("#basicTimepickerJS2").text('$("#timePicker").timepicker().setValue("10:25 PM");');
+
+   
+            $("#basicTimepickerJS6").html(`$("#timePicker2").timepicker({ onChange: function(value){ alert(value); } });`);
+        });
+    </script>
+
+
+</body>
+
+</html>
