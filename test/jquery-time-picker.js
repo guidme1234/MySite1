@@ -10,7 +10,7 @@
     var hours = "";
     var minutes = "";
 
-    for (var h = 1; h < 13; h++) {
+    for (var h = 0; h < 24; h++) {
       var hour = h.toString().padStart(2, "0");
       hours = hours + "<option value='" + hour + "'>" + hour + "</option>";
     }
@@ -31,16 +31,16 @@
         "</select>"
     );
     $(this).append(
-      '<div class="btn-group" role="group" aria-label="Basic radio toggle button group">' +
+      '<div style="visibility:hidden;" class="btn-group" role="group" aria-label="Basic radio toggle button group">' +
         '   <input type="radio" class="btn-check" name="' +
         id +
         'Meridian" id="' +
         id +
         'MeridianAM" autocomplete="off" checked>' +
-        '   <label class="btn btn-outline-primary" for="' +
+        '   <label  class="btn btn-outline-primary" for="' +
         id +
         'MeridianAM">AM</label>' +
-        '   <input type="radio" class="btn-check" name="' +
+        '   <input  type="radio" class="btn-check" name="' +
         id +
         'Meridian" id="' +
         id +
