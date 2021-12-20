@@ -47,6 +47,9 @@ function zeroPad(num, places) {
             $("#timePicker").timepicker({});
 			$("#timePickerAdd").timepicker({});
 			
+			$("#timePicker").timepicker().setValue("06:30 AM");
+			$("#timePickerAdd").timepicker().setValue("08:44 AM");
+			
             $("#btnGetValue").click(function () {
                 $("#timePickerValue").html($("#timePicker").timepicker().getValue().replace('PM', '').replace('AM', ''));
             });
