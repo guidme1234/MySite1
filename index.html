@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Motorola Solutions Israel - 360° Sales Ecosystem</title>
+
+    <!-- Mobile PWA & iOS App Capabilities -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Motorola 360">
+    <meta name="theme-color" content="#005FBE">
+    <link rel="apple-touch-icon" href="https://lh3.googleusercontent.com/d/142l25B-rSH8alTS3n3o8Cb37wN9lEnmW">
+    
+    <!-- Google Fonts Heebo & Assistant -->
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800&family=Heebo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome 6 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --moto-blue: #005FBE;        /* Pantone 300 C - Core Brand Blue */
+            --moto-dark-blue: #004085;   /* 30% Dark Shade Blue */
+            --moto-light-blue: #00A5E5;  /* Pantone 299 C - Tech Light Blue */
+            --moto-gray: #1A1510;        /* Primary Text */
+            --moto-light-gray: #FAF5F0;  /* 10% Clean Background */
+            --moto-card-border: #E2E8F0;
+            --white: #FFFFFF;
+            --shadow-sm: 0 2px 6px rgba(0,0,0,0.06);
+            --shadow-md: 0 8px 22px rgba(0,64,133,0.14);
+            --shadow-lg: 0 16px 36px rgba(0,64,133,0.22);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 18px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Heebo', 'Assistant', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--moto-light-gray);
+            color: var(--moto-gray);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            direction: rtl;
+        }
+
+        header {
+            background-color: var(--white);
+            padding: 12px 24px;
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 3px solid var(--moto-light-blue);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            min-height: 40px;
+        }
+
+        .moto-logo-img {
+            height: 38px;
+            width: auto;
+            max-width: 310px;
+            object-fit: contain;
+            display: block;
+        }
+
+        .brand-badge {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--white);
+            background: var(--moto-dark-blue);
+            padding: 6px 14px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            letter-spacing: 0.4px;
+            white-space: nowrap;
+        }
+
+        .main-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            max-width: 820px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 20px 16px 36px 16px;
+            gap: 16px;
+        }
+
+        .visual-section {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .wheel-img-wrapper {
+            width: 100%;
+            max-width: 580px;
+            border-radius: 50%;
+            box-shadow: var(--shadow-lg);
+            background: var(--white);
+            padding: 8px;
+            border: 3px solid rgba(0, 165, 229, 0.45);
+            position: relative;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .wheel-img-wrapper:hover {
+            box-shadow: 0 18px 42px rgba(0, 64, 133, 0.28);
+            border-color: var(--moto-light-blue);
+        }
+
+        .wheel-img-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            border-radius: 50%;
+            overflow: hidden;
+            background: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .wheel-img-container img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+
+        .wheel-svg-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: auto;
+        }
+
+        .wheel-slice-path {
+            fill: transparent;
+            stroke: rgba(255, 255, 255, 0.05);
+            stroke-width: 1.5;
+            cursor: pointer;
+            transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .wheel-slice-path:hover, 
+        .wheel-slice-path.active {
+            fill: rgba(0, 165, 229, 0.38);
+            stroke: #FFFFFF;
+            stroke-width: 3;
+            filter: drop-shadow(0 0 12px rgba(0, 95, 190, 0.85));
+        }
+
+        .hero-floating-badge {
+            margin-top: 18px;
+            background: var(--moto-blue);
+            color: var(--white);
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-size: 14.5px;
+            font-weight: 700;
+            box-shadow: 0 6px 18px rgba(0, 64, 133, 0.25);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 2px solid var(--white);
+            text-align: center;
+        }
+
+        .search-container {
+            width: 100%;
+            max-width: 580px;
+            position: relative;
+            margin-top: 4px;
+        }
+
+        .search-input-wrap {
+            position: relative;
+            width: 100%;
+        }
+
+        .search-input-wrap i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94A3B8;
+            font-size: 15px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 11px 44px 11px 16px;
+            border-radius: 30px;
+            border: 1px solid #CBD5E1;
+            font-size: 14px;
+            outline: none;
+            background: var(--white);
+            box-shadow: var(--shadow-sm);
+            transition: all 0.2s ease;
+        }
+
+        .search-input:focus {
+            border-color: var(--moto-blue);
+            box-shadow: 0 0 0 3px rgba(0, 95, 190, 0.16);
+        }
+
+        .search-results-dropdown {
+            position: absolute;
+            top: 50px;
+            left: 0;
+            width: 100%;
+            background: var(--white);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--moto-card-border);
+            z-index: 40;
+            max-height: 290px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .search-result-item {
+            padding: 11px 16px;
+            border-bottom: 1px solid #F1F5F9;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 13.5px;
+            font-weight: 600;
+            transition: background 0.15s;
+        }
+
+        .search-result-item:hover {
+            background: #EFF6FF;
+            color: var(--moto-blue);
+        }
+
+        .img-status-badge {
+            font-size: 11px;
+            font-weight: 700;
+            color: #059669;
+            background: #ECFDF5;
+            border: 1px solid #A7F3D0;
+            padding: 3px 10px;
+            border-radius: 12px;
+            display: none;
+            align-items: center;
+            gap: 5px;
+            margin-top: 4px;
+        }
+
+        /* Modal Dialog Styling */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 40, 85, 0.76);
+            backdrop-filter: blur(5px);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.25s ease, visibility 0.25s ease;
+            padding: 16px;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background-color: var(--white);
+            width: 100%;
+            max-width: 600px;
+            max-height: 90vh;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transform: scale(0.94) translateY(16px);
+            transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.32);
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1) translateY(0);
+        }
+
+        .modal-header {
+            position: relative;
+            background-color: var(--moto-blue);
+            padding: 16px 20px;
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .modal-header-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 17.5px;
+            font-weight: 800;
+        }
+
+        .modal-icon-box {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .close-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            font-size: 16px;
+            color: var(--white);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .close-btn:hover {
+            background: rgba(255,255,255,0.35);
+        }
+
+        .modal-body {
+            padding: 18px 20px;
+            overflow-y: auto;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .m-desc {
+            font-size: 13.5px;
+            line-height: 1.5;
+            color: var(--moto-gray);
+            background: rgba(0, 95, 190, 0.05);
+            padding: 12px 14px;
+            border-radius: var(--radius-sm);
+            border-right: 3px solid var(--moto-light-blue);
+        }
+
+        .m-links-title {
+            font-size: 12.5px;
+            font-weight: 800;
+            color: #64748B;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .subcat-header {
+            font-size: 12.5px;
+            font-weight: 800;
+            color: var(--moto-blue);
+            background: #EBF3FA;
+            padding: 6px 12px;
+            border-radius: var(--radius-sm);
+            margin-top: 10px;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .links-list {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .link-item-row {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 9px 12px;
+            background-color: #F8FAFC;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--moto-card-border);
+            gap: 10px;
+            transition: background 0.15s, border-color 0.15s;
+        }
+
+        .link-item-row:hover {
+            background-color: #EFF6FF;
+            border-color: #BFDBFE;
+        }
+
+        .link-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .link-type-icon {
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        .type-pdf { color: #EA4335; }
+        .type-video { color: #0284C7; }
+        .type-spec { color: #475569; }
+
+        .link-label {
+            text-decoration: none;
+            color: var(--moto-blue);
+            font-weight: 700;
+            font-size: 13.5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .link-label:hover {
+            text-decoration: underline;
+        }
+
+        .link-checkbox {
+            width: 17px;
+            height: 17px;
+            accent-color: var(--moto-blue);
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .soon-tag {
+            font-size: 11px;
+            background: #E2E8F0;
+            color: #64748B;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .modal-footer {
+            padding: 14px 20px;
+            background-color: #F8FAFC;
+            border-top: 1px solid #E2E8F0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .actions-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .btn-action {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 11px 14px;
+            border-radius: var(--radius-sm);
+            font-size: 13.5px;
+            font-weight: 700;
+            gap: 8px;
+            transition: all 0.2s;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .btn-whatsapp {
+            background-color: #25D366;
+            color: var(--white);
+        }
+        .btn-whatsapp:hover {
+            background-color: #1EA952;
+        }
+
+        .btn-gmail {
+            background-color: #EA4335;
+            color: var(--white);
+        }
+        .btn-gmail:hover {
+            background-color: #D32F2F;
+        }
+
+        /* AI Copilot Floating Button & Chat Drawer */
+        .ai-fab-btn {
+            position: fixed;
+            bottom: 24px;
+            left: 24px;
+            background: linear-gradient(135deg, #005FBE 0%, #004085 100%);
+            color: var(--white);
+            border: 2px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 10px 25px rgba(0, 95, 190, 0.45);
+            border-radius: 50px;
+            padding: 12px 20px;
+            font-size: 14px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            z-index: 90;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .ai-fab-btn:hover {
+            transform: scale(1.05) translateY(-3px);
+            box-shadow: 0 14px 30px rgba(0, 95, 190, 0.6);
+            background: linear-gradient(135deg, #00A5E5 0%, #005FBE 100%);
+        }
+        .ai-pulse-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background-color: #25D366;
+            box-shadow: 0 0 10px #25D366;
+            animation: pulseDot 1.8s infinite;
+        }
+        @keyframes pulseDot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(1.3); }
+        }
+
+        /* AI Modal Drawer */
+        .ai-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 40, 85, 0.78);
+            backdrop-filter: blur(6px);
+            z-index: 120;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.25s ease, visibility 0.25s ease;
+            padding: 16px;
+        }
+        .ai-modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .ai-chat-window {
+            background-color: var(--white);
+            width: 100%;
+            max-width: 650px;
+            height: 80vh;
+            max-height: 750px;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transform: scale(0.95) translateY(15px);
+            transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 25px 60px rgba(0, 40, 85, 0.4);
+            border: 1px solid rgba(0, 95, 190, 0.2);
+        }
+        .ai-modal-overlay.active .ai-chat-window {
+            transform: scale(1) translateY(0);
+        }
+
+        .ai-chat-header {
+            background: linear-gradient(135deg, #005FBE 0%, #004085 100%);
+            padding: 14px 18px;
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid var(--moto-light-blue);
+        }
+        .ai-header-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .ai-badge-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 17px;
+            color: #A6D1FF;
+        }
+        .ai-chat-body {
+            flex: 1;
+            padding: 18px 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            background-color: #FAF5F0;
+        }
+
+        /* Message Bubbles */
+        .ai-msg {
+            max-width: 88%;
+            padding: 12px 16px;
+            border-radius: 14px;
+            font-size: 13.8px;
+            line-height: 1.55;
+            word-wrap: break-word;
+        }
+        .ai-msg-bot {
+            align-self: flex-start;
+            background-color: var(--white);
+            color: var(--moto-gray);
+            border-right: 4px solid var(--moto-blue);
+            box-shadow: var(--shadow-sm);
+        }
+        .ai-msg-user {
+            align-self: flex-end;
+            background: linear-gradient(135deg, #005FBE 0%, #004085 100%);
+            color: var(--white);
+            border-bottom-left-radius: 2px;
+            box-shadow: 0 4px 12px rgba(0, 95, 190, 0.25);
+        }
+
+        /* Chat Input Bar */
+        .ai-chat-footer {
+            padding: 12px 18px;
+            background-color: var(--white);
+            border-top: 1px solid #E2E8F0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .ai-input-box {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1.5px solid #CBD5E1;
+            border-radius: 26px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            background: #FFFFFF;
+        }
+        .ai-input-box:focus {
+            border-color: var(--moto-blue);
+            box-shadow: 0 0 0 3px rgba(0, 95, 190, 0.15);
+        }
+        .ai-send-btn {
+            background-color: var(--moto-blue);
+            color: var(--white);
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+        .ai-send-btn:hover {
+            background-color: var(--moto-dark-blue);
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-container" onclick="document.getElementById('localLogoInput').click()" title="לחצו להעלאת קובץ לוגו מהמכשיר לשמירה קבועה">
+            <!-- Official Motorola Solutions Header Logo -->
+            <img src="https://raw.githubusercontent.com/guidme1234/MySite1/refs/heads/master/msi-logo-rgb-h-public_pos-dark-blue-core.png" id="motoHeaderLogo" alt="Motorola Solutions Logo" class="moto-logo-img" referrerpolicy="no-referrer">
+        </div>
+        <input type="file" id="localLogoInput" accept="image/*" style="display:none;" onchange="handleLocalLogoUpload(event)">
+        <div class="brand-badge">
+            <i class="fa-solid fa-shield-halved"></i>
+            ישראל | Sales Hub
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="visual-section">
+            <div class="wheel-img-wrapper">
+                <div class="wheel-img-container">
+                    <!-- 360 Ecosystem Graphic Image -->
+                    <img src="https://raw.githubusercontent.com/guidme1234/MySite1/refs/heads/master/360_Sales.png" 
+                         id="wheelImg" 
+                         alt="Motorola Solutions 360 Ecosystem" 
+                         referrerpolicy="no-referrer"
+                         loading="eager"
+                         onerror="handleWheelImgError(this)">
+                    <!-- Interactive SVG overlay over the 11 sectors -->
+                    <svg class="wheel-svg-overlay" viewBox="0 0 500 500" id="wheelSvgOverlay">
+                        <!-- Slices populated dynamically via JavaScript -->
+                    </svg>
+                </div>
+            </div>
+
+            <div id="imgStatusBadge" class="img-status-badge">
+                <i class="fa-solid fa-circle-check"></i>
+                <span>התמונה נשמרה בהצלחה בזיכרון המקומי של המכשיר</span>
+            </div>
+
+            <!-- Descriptive Guidance Badge -->
+            <div class="hero-floating-badge">
+                <i class="fa-solid fa-hand-pointer"></i>
+                לחצו על הפתרונות במעגל ה-360 לצפייה בחומרים ושליחה ללקוח
+            </div>
+
+            <!-- Quick Search Bar -->
+            <div class="search-container">
+                <div class="search-input-wrap">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="searchInput" class="search-input" placeholder="חיפוש מהיר של פתרון, מכשיר או ברושור..." oninput="handleSearch()">
+                </div>
+                <div class="search-results-dropdown" id="searchResultsDropdown"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-header-title" id="modalHeaderTitle">
+                    <div class="modal-icon-box">
+                        <i class="fa-solid fa-folder-open" id="modalIcon"></i>
+                    </div>
+                    <div>
+                        <div id="modalTitle">כותרת</div>
+                        <div style="font-size: 11.5px; opacity: 0.9; font-weight: 400;" id="modalSubtitle">תת כותרת</div>
+                    </div>
+                </div>
+                <button class="close-btn" id="closeModalBtn" aria-label="סגור"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            
+            <div class="modal-body">
+                <p class="m-desc" id="modalDesc">תיאור המערכת והתועלות המרכזיות</p>
+                
+                <div class="m-links-title">
+                    <span>סמנו את החומרים שברצונכם לשלוח:</span>
+                    <span style="font-size: 11px; font-weight: normal; color: #888;">לחצו על שם הקובץ לצפייה</span>
+                </div>
+                <div class="links-list" id="modalLinksList">
+                    <!-- Links rendered dynamically via JS -->
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <div class="actions-grid">
+                    <a href="#" class="btn-action btn-whatsapp" id="whatsappBtn" target="_blank">
+                        <i class="fa-brands fa-whatsapp"></i>
+                        שלח ב-WhatsApp
+                    </a>
+                    <a href="#" class="btn-action btn-gmail" id="gmailBtn" target="_blank">
+                        <i class="fa-solid fa-envelope"></i>
+                        טיוטה ב-Gmail
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating AI Copilot Button -->
+    <button class="ai-fab-btn" id="openAiChatBtn" title="שיח חופשי עם יועץ המכירות האישי (AI Copilot)">
+        <span class="ai-pulse-dot"></span>
+        <i class="fa-solid fa-robot"></i>
+        <span>יועץ מכירות AI</span>
+    </button>
+
+    <!-- AI Copilot Chat Modal Window -->
+    <div class="ai-modal-overlay" id="aiModalOverlay">
+        <div class="ai-chat-window">
+            <div class="ai-chat-header">
+                <div class="ai-header-info">
+                    <div class="ai-badge-icon">
+                        <i class="fa-solid fa-brain"></i>
+                    </div>
+                    <div>
+                        <div style="font-weight: 800; font-size: 16px;">יועץ מכירות Motorola Solutions ISAREL</div>
+                        <div style="font-size: 11.5px; opacity: 0.9; font-weight: 400;">הכנה לפגישות, פיצוח התנגדויות, ניסוח פניות ועוד</div>
+                    </div>
+                </div>
+                <button class="close-btn" id="closeAiChatBtn" aria-label="סגור"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <div class="ai-chat-body" id="aiChatBody">
+                <!-- Welcome Initial Message -->
+                <div class="ai-msg ai-msg-bot">
+                    <strong>שלום! אני יועץ המכירות האישי שלך במוטורולה סולושנס ישראל</strong><br>
+                    אני כאן בשביל לעזור לך למצוא לקוחות פוטנציאליים, להכין אותך לפגישות, לנסח פניות ומענה ללקוחות, לפצח התנגדויות ועוד.<br><br>
+                    התחל לשאול אותי...
+                </div>
+            </div>
+
+            <div class="ai-chat-footer">
+                <input type="text" id="aiUserInput" class="ai-input-box" placeholder="" onkeydown="if(event.key === 'Enter') handleAiSend()">
+                <button class="ai-send-btn" id="aiSendBtn" onclick="handleAiSend()" title="שלח שאלה">
+                    <i class="fa-solid fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Multi-CDN error handler for mobile browsers & iFrames
+        function handleWheelImgError(img) {
+            const fallbackChain = [
+                "https://drive.google.com/thumbnail?id=142l25B-rSH8alTS3n3o8Cb37wN9lEnmW&sz=w1200",
+                "https://docs.google.com/uc?export=view&id=142l25B-rSH8alTS3n3o8Cb37wN9lEnmW",
+                "https://drive.google.com/uc?id=142l25B-rSH8alTS3n3o8Cb37wN9lEnmW"
+            ];
+            let step = parseInt(img.dataset.step || "0", 10);
+            if (step < fallbackChain.length) {
+                img.dataset.step = step + 1;
+                img.src = fallbackChain[step];
+            }
+        }
+
+        // Database of 11 sectors - Completely up to date with Motorola Israel marketing collateral
+        const rowsData = [
+            {
+                id: "mototrbo_systems_link",
+                sectorIndex: 1,
+                title: "מערכות ותשתיות קשר DMR",
+                subtitle: "תשתיות ואתרים לכיסוי ארצי ומקומי",
+                icon: "fa-tower-cell",
+                externalUrl: "https://www.motorolasolutions.com/he_il/products/two-way-radios-licensed/dmr/mototrbo/mototrbo-systems.html"
+            },
+            {
+                id: "avigilon_link",
+                sectorIndex: 2,
+                title: "מצלמות אבטחה Avigilon",
+                subtitle: "מצלמות אבטחה חכמות ואנליטיקה מבוססת AI",
+                icon: "fa-camera",
+                externalUrl: "https://www.avigilon.com"
+            },
+            {
+                id: "body_cams",
+                sectorIndex: 3,
+                title: "מצלמות גוף ורכב",
+                subtitle: "תיעוד רציף ושקיפות מלאה בשטח",
+                icon: "fa-video",
+                desc: "מצלמות גוף ורכב מוקשחות המציגות שקיפות מלאה, הגנה על הצוותים בשטח והוכחות חותכות בזמן אמת.",
+                items: [
+                    { subcat: "מצלמת גוף VB400", title: "📄 ברושור VB400", url: "https://drive.google.com/file/d/11tJWWv7NT55oY1cZ2o634GpUh-i-CrC1/view?usp=drive_link", type: "pdf" },
+                    { subcat: "מצלמת גוף VB400", title: "⚙️ מפרט טכני VB400", url: "https://drive.google.com/file/d/11wcAPV2POo-Zvxg65OduM24VBe8XLEK4/view?usp=drive_link", type: "spec" },
+                    { subcat: "מצלמת גוף V500", title: "📄 ברושור V500", url: "https://drive.google.com/file/d/11bnENae32QiN-u_t90fAm4VAHGx52mij/view?usp=drive_link", type: "pdf" },
+                    { subcat: "מצלמת גוף V500", title: "⚙️ מפרט טכני V500", url: "https://drive.google.com/file/d/11oE3_qFkPxeqb4DRNOTqttStW4sSnF0_/view?usp=drive_link", type: "spec" },
+                    { subcat: "מצלמת גוף V500", title: "🎬 סרטון V500", url: "https://www.youtube.com/watch?v=qWByMKHSiks", type: "video" },
+                    { subcat: "מצלמת רכב M500", title: "📄 ברושור M500", url: "", type: "pdf" },
+                    { subcat: "מצלמת רכב M500", title: "⚙️ מפרט טכני M500", url: "", type: "spec" },
+                    { subcat: "מצלמת רכב M500", title: "🎬 סרטון M500", url: "https://www.youtube.com/watch?v=PIHRy_wfe1o", type: "video" }
+                ]
+            },
+            {
+                id: "indoor_iot_link",
+                sectorIndex: 4,
+                title: "כיסוי מבנים ו-IoT",
+                subtitle: "פתרונות כיסוי תקשורת פנים-מבנית ואינטרנט של הדברים",
+                icon: "fa-building-radar",
+                externalUrl: "https://www.motorolasolutions.com/he_il/products/mission-critical-internet-of-things.html"
+            },
+            {
+                id: "nufarit",
+                sectorIndex: 5,
+                title: "נופרית, מערכת התרעה למבנים סגורים",
+                subtitle: "",
+                icon: "fa-bell",
+                desc: "מערכת התרעה ייעודית למבנים סגורים, המאפשרת את שמיעת התרעות החירום לשוהים במבנה.",
+                items: [
+                    { title: "📜 חובת התקנה - מסמך רגולציה (PDF)", url: "https://drive.google.com/file/d/1hUPxmltvPyrg-1SSc2-NevGqCQmNfXhR/view?usp=drive_link", type: "pdf" },
+                    { title: "📄 ברושור נופרית", url: "https://drive.google.com/file/d/13FtHqMFBzPi92o0SFYWvtE-PwbOCq9-p/view?usp=drive_link", type: "pdf" }
+                ]
+            },
+            {
+                id: "dotan",
+                sectorIndex: 6,
+                title: "דותן, מערכת מצוקה ודיווח בחירום",
+                subtitle: "",
+                icon: "fa-shield-halved",
+                desc: "מערכת מצוקה המאפשרת שידור התרעה מיידי למוקד, לקיצור של זמני התגובה ולהגנה על חיי אדם בשעת חירום.",
+                items: [
+                    { title: "📄 ברושור דותן קשר", url: "https://drive.google.com/file/d/1PyxYutuVlDLQp5W7E9L8d7Ohc85ULsi6/view?usp=drive_link", type: "pdf" },
+                    { title: "📄 ברושור דותן WAVE", url: "https://drive.google.com/file/d/1TR8gL-S-H86TaADJHUgTha8N6d-Rpmh3/view?usp=drive_link", type: "pdf" }
+                ]
+            },
+            {
+                id: "shelters",
+                sectorIndex: 7,
+                title: "שומר סף, מערכת לבקרה ופתיחת מקלטים",
+                subtitle: "",
+                icon: "fa-person-shelter",
+                desc: "מערכת חכמה לבקרה ופתיחה מרחוק של מקלטים, המאפשרת שקט בחיי השגרה ומענה מיידי בשעת חירום.",
+                items: [
+                    { title: "📄 ברושור מערכת שומר סף (פתיחת מקלטים)", url: "https://drive.google.com/file/d/1vYI2K9Q9EoM13JiLPMWD1VarPz8EVfEV/view?usp=drive_link", type: "pdf" }
+                ]
+            },
+            {
+                id: "services_sec",
+                sectorIndex: 8,
+                title: "מקלט זימון (ביפר)",
+                subtitle: "",
+                icon: "fa-pager",
+                desc: "",
+                items: []
+            },
+            {
+                id: "gateway",
+                sectorIndex: 9,
+                title: "מגשר בין מערכת הקשר MOTOTRBO למערכת ה- WAVE PTX",
+                subtitle: "",
+                icon: "fa-network-wired",
+                desc: "גישור בין מערכת ה-MOTOTRBO לבין מערכת ה- WAVE המאפשר תקשורת קולית מיידית ואחודה מכל מקום",
+                items: [
+                    { title: "📄 ברושור מגשר למערכת הקשר (Radio Interoperability Gateway)", url: "", type: "pdf" }
+                ]
+            },
+            {
+                id: "wave",
+                sectorIndex: 10,
+                title: "WAVE PTX, מערכת קשר בטכנולוגית PoC",
+                subtitle: "",
+                icon: "fa-tower-cell",
+                desc: "מערכת תקשורת רחבת סרט המאפשרת תקשורת ארצית ובינלאומית בין צוותי עבודה.",
+                items: [
+                    { subcat: "מערכת WAVE PTX", title: "📄 ברושור המערכת", url: "https://www.motorolasolutions.com/content/dam/il--documents/wave_system_heb.pdf", type: "pdf" },
+                    { subcat: "מערכת WAVE PTX", title: "🎬 סרטון המערכת", url: "https://youtu.be/asnpW985aXQ?si=UXVG88KVi6d7zLJi", type: "video" },
+                    { subcat: "TLK110", title: "📄 ברושור מכשיר TLK110", url: "https://www.motorolasolutions.com/content/dam/il--documents/TLK110.pdf", type: "pdf" },
+                    { subcat: "TLK110", title: "🎬 סרטון TLK110", url: "https://youtube.com/shorts/gvEqwX4VGP8?si=hDAmhb3yQ4v_vcsm", type: "video" },
+                    { subcat: "TLK110", title: "🎙️ TLK110 Voice AI", url: "https://youtu.be/tpFM8iCgnfA?si=htx73psioHegLRra", type: "video" },
+                    { subcat: "EVOLVE", title: "📄 ברושור EVOLVE", url: "https://www.motorolasolutions.com/content/dam/msi/docs/he-il/Evolve_Brochure_HEB.pdf", type: "pdf" },
+                    { subcat: "EVOLVE", title: "⚙️ מפרט טכני EVOLVE", url: "https://www.motorolasolutions.com/content/dam/msi/docs/he-il/Evolve_DataSheet_HEB.pdf", type: "spec" },
+                    { subcat: "EVOLVE", title: "🎬 סרטון EVOLVE", url: "https://youtu.be/jFTBs1wCk7c?si=BkZjma4VMLhwYlpa", type: "video" },
+                    { subcat: "ION", title: "📄 ברושור ION", url: "https://www.motorolasolutions.com/content/dam/msi/archive/MOTOTRBO_Ion_Brochure_HEB.pdf", type: "pdf" },
+                    { subcat: "ION", title: "⚙️ מפרט טכני ION", url: "https://www.motorolasolutions.com/content/dam/msi/archive/MOTOTRBO_Ion_Datasheet_HEB.pdf", type: "spec" },
+                    { subcat: "ION", title: "🎬 סרטון ION", url: "https://youtu.be/B1cLPl14sv8?si=XHrY04Cx8FlBAyRn", type: "video" },
+                    { subcat: "LEX11", title: "📄 ברושור LEX11", url: "https://www.motorolasolutions.com/content/dam/msi/docs/he-il/lex11-heb_11-22.pdf", type: "pdf" },
+                    { subcat: "TLK150", title: "📄 ברושור TLK150", url: "https://www.motorolasolutions.com/content/dam/msi/docs/he-il/tlk150_new.pdf", type: "pdf" },
+                    { subcat: "לחצן PTT Bluetooth", title: "🔘 לחצן PTT Bluetooth", url: "https://www.motorolasolutions.com/content/dam/il--documents/PTT_BT.pdf", type: "pdf" },
+                    { subcat: "Dispatcher", title: "📄 ברושור Dispatcher", url: "", type: "pdf" },
+                    { subcat: "CAT", title: "📄 ברושור CAT", url: "", type: "pdf" },
+                    { subcat: "מגשר למערכת הקשר", title: "📄 ברושור מגשר למערכת הקשר (Radio Interoperability Gateway)", url: "", type: "pdf" }
+                ]
+            },
+            {
+                id: "mototrbo_dmr",
+                sectorIndex: 11,
+                title: "MOTOTRBO מערכת קשר DMR",
+                subtitle: "",
+                icon: "fa-walkie-talkie",
+                desc: "מערכת תקשורת רדיו דיגיטלית (DMR) אמינה, המשלבת קול ונתונים בזמן אמת להגברת בטיחות הצוותים והיעילות המבצעית בארגון.",
+                items: [
+                    { subcat: "מכשיר ION", title: "⚙️ מפרט טכני ION", url: "https://drive.google.com/file/d/1WRAZBq90pJ1rUEYRgHP4dPGWIdCSvm6r/view?usp=drive_link", type: "spec" },
+                    { subcat: "מכשיר ION", title: "🎬 סרטון ION", url: "https://youtu.be/B1cLPl14sv8?si=XHrY04Cx8FlBAyRn", type: "video" },
+                    { subcat: "MOTOTRBO R2", title: "📄 ברושור R2", url: "https://drive.google.com/file/d/1J8u_unsqbqH-Rp9vMdaS8goOoMzIwWYY/view?usp=drive_link", type: "pdf" },
+                    { subcat: "MOTOTRBO R2", title: "⚙️ מפרט טכני R2", url: "https://drive.google.com/file/d/1J5khunz3Z36REAO0z1-2yi1gmFFKA1lF/view?usp=drive_link", type: "spec" },
+                    { subcat: "MOTOTRBO R2", title: "🎬 סרטון R2", url: "https://youtu.be/jg23QQx2UAo?si=nlh3q-IO6XgRLrxm", type: "video" },
+                    { subcat: "MOTOTRBO R5", title: "📄 ברושור R5", url: "https://drive.google.com/file/d/1OCbgsqPbkF-eUcbL5Nqs_c9qI9smxctr/view?usp=drive_link", type: "pdf" },
+                    { subcat: "MOTOTRBO R5", title: "⚙️ מפרט טכני R5", url: "https://drive.google.com/file/d/1OCBmfm5Hgt2iHWPizI3GoqVPC_6A2Uj_/view?usp=drive_link", type: "spec" },
+                    { subcat: "MOTOTRBO R5", title: "🎬 סרטון R5", url: "https://youtu.be/AD2k_UeSiOs?si=9DoOnqsr8TtvYe39", type: "video" },
+                    { subcat: "MOTOTRBO R7", title: "📄 ברושור R7", url: "https://drive.google.com/file/d/1JLQBRbv7Q7eOhcI6mHZUQ2pEP2W9sv0T/view?usp=drive_link", type: "pdf" },
+                    { subcat: "MOTOTRBO R7", title: "⚙️ מפרט טכני R7", url: "https://drive.google.com/file/d/1JNMME_iBXSGEpOzdX5SBqT2Vhc_REe3p/view?usp=drive_link", type: "spec" },
+                    { subcat: "MOTOTRBO R7", title: "🎬 סרטון R7", url: "https://youtu.be/Ph_f1N7IkcU?si=kCoFIFZoZJ8mWsQT", type: "video" },
+                    { subcat: "מכשיר DP3400", title: "📄 ברושור DP3400", url: "https://www.motorolasolutions.com/content/dam/msi/docs/EA_Collaterals/Hebrew/mototrbo/portables/DP3000e_DataSheet_HEB.pdf", type: "pdf" },
+                    { subcat: "מכשיר SL2600", title: "📄 ברושור SL2600", url: "https://drive.google.com/file/d/1WQxoBsE_R0XpYX5SapALvvGusHzSnibS/view?usp=drive_link", type: "pdf" },
+                    { subcat: "דותן - מערכת מצוקה", title: "📄 ברושור דותן קשר", url: "https://drive.google.com/file/d/1PyxYutuVlDLQp5W7E9L8d7Ohc85ULsi6/view?usp=drive_link", type: "pdf" }
+                ]
+            }
+        ];
+
+        const modalOverlay = document.getElementById('modalOverlay');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const wheelSvgOverlay = document.getElementById('wheelSvgOverlay');
+        const wheelImg = document.getElementById('wheelImg');
+
+        let activeData = null;
+
+        // Initialize local images from device memory
+        function initLocalImage() {
+            try {
+                const savedImg = localStorage.getItem('moto_wheel_img');
+                if (savedImg && savedImg.length > 500) {
+                    wheelImg.src = savedImg;
+                    showLocalImageSuccessBadge();
+                }
+            } catch(e) {}
+
+            try {
+                const savedLogo = localStorage.getItem('moto_header_logo');
+                if (savedLogo && savedLogo.length > 100) {
+                    const logoContainer = document.querySelector('.logo-container');
+                    if (logoContainer) {
+                        logoContainer.innerHTML = `<img src="${savedLogo}" id="motoHeaderLogo" alt="Motorola Solutions Logo" class="moto-logo-img">`;
+                    }
+                }
+            } catch(e) {}
+        }
+
+        // Handle user upload of custom logo file
+        function handleLocalLogoUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const base64Data = e.target.result;
+                const logoContainer = document.querySelector('.logo-container');
+                if (logoContainer) {
+                    logoContainer.innerHTML = `<img src="${base64Data}" id="motoHeaderLogo" alt="Motorola Solutions Logo" class="moto-logo-img">`;
+                }
+                try {
+                    localStorage.setItem('moto_header_logo', base64Data);
+                } catch(err) {}
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function showLocalImageSuccessBadge() {
+            const badge = document.getElementById('imgStatusBadge');
+            if (badge) {
+                badge.style.display = 'inline-flex';
+            }
+        }
+
+        function renderWheelOverlay() {
+            const totalSlices = 11;
+            const cx = 250, cy = 250, rOuter = 246, rInner = 80;
+            const sliceAngle = 360 / totalSlices;
+            const startAngleOffset = -90; // Top Alignment matching the visual graphic
+
+            wheelSvgOverlay.innerHTML = '';
+
+            for (let i = 0; i < totalSlices; i++) {
+                const sectorNum = i + 1;
+                const startAngle = startAngleOffset + (i * sliceAngle);
+                const endAngle = startAngle + sliceAngle;
+
+                const pathData = describeDonutSlice(cx, cy, rInner, rOuter, startAngle, endAngle);
+                const pathEl = document.createElementNS("http://www.w3.org/2000/svg", "path");
+                pathEl.setAttribute("d", pathData);
+                pathEl.setAttribute("class", "wheel-slice-path");
+                pathEl.setAttribute("id", `slice-${sectorNum}`);
+
+                const itemData = rowsData.find(d => d.sectorIndex === sectorNum);
+
+                pathEl.onclick = () => {
+                    if (itemData) {
+                        if (itemData.externalUrl) {
+                            window.open(itemData.externalUrl, '_blank');
+                        } else {
+                            openModal(itemData);
+                        }
+                    }
+                };
+
+                pathEl.onmouseenter = () => highlightSector(sectorNum);
+                pathEl.onmouseleave = () => resetSectors();
+
+                wheelSvgOverlay.appendChild(pathEl);
+            }
+        }
+
+        function describeDonutSlice(cx, cy, rIn, rOut, startAngle, endAngle) {
+            const startRad = (startAngle * Math.PI) / 180;
+            const endRad = (endAngle * Math.PI) / 180;
+
+            const x1 = cx + rOut * Math.cos(startRad);
+            const y1 = cy + rOut * Math.sin(startRad);
+            const x2 = cx + rOut * Math.cos(endRad);
+            const y2 = cy + rOut * Math.sin(endRad);
+
+            const x3 = cx + rIn * Math.cos(endRad);
+            const y3 = cy + rIn * Math.sin(endRad);
+            const x4 = cx + rIn * Math.cos(startRad);
+            const y4 = cy + rIn * Math.sin(startRad);
+
+            const largeArc = endAngle - startAngle > 180 ? 1 : 0;
+
+            return [
+                `M ${x1} ${y1}`,
+                `A ${rOut} ${rOut} 0 ${largeArc} 1 ${x2} ${y2}`,
+                `L ${x3} ${y3}`,
+                `A ${rIn} ${rIn} 0 ${largeArc} 0 ${x4} ${y4}`,
+                `Z`
+            ].join(" ");
+        }
+
+        function highlightSector(sectorNum) {
+            document.querySelectorAll('.wheel-slice-path').forEach(p => p.classList.remove('active'));
+            const path = document.getElementById(`slice-${sectorNum}`);
+            if (path) path.classList.add('active');
+        }
+
+        function resetSectors() {
+            document.querySelectorAll('.wheel-slice-path').forEach(p => p.classList.remove('active'));
+        }
+
+        function openModal(data) {
+            activeData = data;
+            document.getElementById('modalTitle').textContent = data.title;
+            document.getElementById('modalSubtitle').textContent = data.subtitle || '';
+            
+            const descEl = document.getElementById('modalDesc');
+            if (data.desc && data.desc.trim() !== '') {
+                descEl.textContent = data.desc;
+                descEl.style.display = 'block';
+            } else {
+                descEl.style.display = 'none';
+            }
+            
+            document.getElementById('modalIcon').className = `fa-solid ${data.icon}`;
+
+            const listContainer = document.getElementById('modalLinksList');
+            listContainer.innerHTML = '';
+
+            if (!data.items || data.items.length === 0) {
+                listContainer.innerHTML = `<div style="text-align:center; color:#888; padding:16px;">חומרי הסברה ומפרטים יעלו בקרוב.</div>`;
+            } else {
+                let currentSubcat = "";
+
+                data.items.forEach((item, index) => {
+                    if (item.subcat && item.subcat !== currentSubcat) {
+                        currentSubcat = item.subcat;
+                        const subHeader = document.createElement('div');
+                        subHeader.className = 'subcat-header';
+                        subHeader.innerHTML = `<i class="fa-solid fa-layer-group"></i> ${currentSubcat}`;
+                        listContainer.appendChild(subHeader);
+                    }
+
+                    const row = document.createElement('div');
+                    row.className = 'link-item-row';
+
+                    const hasLink = item.url && item.url.trim() !== "";
+                    const iconClass = item.type === 'video' ? 'fa-play type-video' : (item.type === 'spec' ? 'fa-gears type-spec' : 'fa-file-pdf type-pdf');
+
+                    row.innerHTML = `
+                        <input type="checkbox" class="link-checkbox" id="chk-${index}" ${hasLink ? '' : 'disabled'} onchange="updateActionLinks()">
+                        <div class="link-info">
+                            <i class="fa-solid ${iconClass} link-type-icon"></i>
+                            ${hasLink ? 
+                                `<a href="${item.url}" target="_blank" class="link-label" title="${item.title}">${item.title}</a>` :
+                                `<span class="link-label" style="color:#94A3B8; cursor:default;">${item.title}</span> <span class="soon-tag">בקרוב</span>`
+                            }
+                        </div>
+                    `;
+                    listContainer.appendChild(row);
+                });
+            }
+
+            updateActionLinks();
+            modalOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function getSelectedItemsText() {
+            if (!activeData) return "";
+
+            let text = `שלום,\nמצורפים חומרים שיווקיים של מערכת ${activeData.title} מבית מוטורולה סולושנס.\n\n`;
+            let hasSelection = false;
+
+            if (activeData.items && activeData.items.length > 0) {
+                activeData.items.forEach((item, index) => {
+                    const chk = document.getElementById(`chk-${index}`);
+                    if (chk && chk.checked && item.url) {
+                        text += `• ${item.title}: ${item.url}\n`;
+                        hasSelection = true;
+                    }
+                });
+            }
+
+            if (!hasSelection) {
+                text = `שלום,\nלמידע נוסף אודות פתרון ${activeData.title} מבית מוטורולה סולושנס.\n`;
+            }
+
+            text += `\nלכל שאלה, או לתיאום פגישה, אני זמין עבורך\nבברכה,`;
+            return text;
+        }
+
+        function updateActionLinks() {
+            const bodyText = getSelectedItemsText();
+            const subjectText = `מוטורולה סולושנס - חומרים שיווקיים: ${activeData ? activeData.title : ''}`;
+
+            // WhatsApp Action Link
+            const waUrl = `https://wa.me/?text=${encodeURIComponent(bodyText)}`;
+            document.getElementById('whatsappBtn').href = waUrl;
+
+            // Gmail Web Action Link
+            const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&tf=1&su=${encodeURIComponent(subjectText)}&body=${encodeURIComponent(bodyText)}`;
+            document.getElementById('gmailBtn').href = gmailUrl;
+        }
+
+        function closeModal() {
+            modalOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        closeModalBtn.addEventListener('click', closeModal);
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) closeModal();
+        });
+
+        function handleSearch() {
+            const val = document.getElementById('searchInput').value.trim().toLowerCase();
+            const dropdown = document.getElementById('searchResultsDropdown');
+
+            if (val === '') {
+                dropdown.style.display = 'none';
+                dropdown.innerHTML = '';
+                return;
+            }
+
+            const results = [];
+            rowsData.forEach(sec => {
+                const matchSec = sec.title.toLowerCase().includes(val) || (sec.subtitle && sec.subtitle.toLowerCase().includes(val)) || (sec.desc && sec.desc.toLowerCase().includes(val));
+                let matchItem = null;
+
+                if (sec.items) {
+                    matchItem = sec.items.find(it => it.title.toLowerCase().includes(val) || (it.subcat && it.subcat.toLowerCase().includes(val)));
+                }
+
+                if (matchSec || matchItem) {
+                    results.push({ sec, matchItem });
+                }
+            });
+
+            if (results.length === 0) {
+                dropdown.innerHTML = `<div style="padding:12px; color:#94A3B8; text-align:center; font-size:13px;">לא נמצאו תוצאות עבור "${val}"</div>`;
+                dropdown.style.display = 'block';
+                return;
+            }
+
+            dropdown.innerHTML = '';
+            results.forEach(res => {
+                const row = document.createElement('div');
+                row.className = 'search-result-item';
+                const label = res.matchItem ? `${res.matchItem.title} (${res.sec.title})` : res.sec.title;
+                row.innerHTML = `
+                    <span><i class="fa-solid ${res.sec.icon}" style="color:var(--moto-blue); margin-left:8px;"></i>${label}</span>
+                    <i class="fa-solid fa-chevron-left" style="font-size:11px; color:#94A3B8;"></i>
+                `;
+                row.onclick = () => {
+                    dropdown.style.display = 'none';
+                    document.getElementById('searchInput').value = '';
+                    if (res.sec.externalUrl) {
+                        window.open(res.sec.externalUrl, '_blank');
+                    } else {
+                        openModal(res.sec);
+                    }
+                };
+                dropdown.appendChild(row);
+            });
+
+            dropdown.style.display = 'block';
+        }
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.search-container')) {
+                document.getElementById('searchResultsDropdown').style.display = 'none';
+            }
+        });
+
+        // Chat UI references
+        const openAiChatBtn = document.getElementById('openAiChatBtn');
+        const closeAiChatBtn = document.getElementById('closeAiChatBtn');
+        const aiModalOverlay = document.getElementById('aiModalOverlay');
+        const aiChatBody = document.getElementById('aiChatBody');
+        const aiUserInput = document.getElementById('aiUserInput');
+
+        function openAiChat() {
+            aiModalOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => aiUserInput.focus(), 300);
+        }
+
+        function closeAiChat() {
+            aiModalOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        openAiChatBtn.addEventListener('click', openAiChat);
+        closeAiChatBtn.addEventListener('click', closeAiChat);
+        aiModalOverlay.addEventListener('click', (e) => {
+            if (e.target === aiModalOverlay) closeAiChat();
+        });
+
+        function appendMessage(sender, htmlContent) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `ai-msg ${sender === 'user' ? 'ai-msg-user' : 'ai-msg-bot'}`;
+            msgDiv.innerHTML = htmlContent;
+            aiChatBody.appendChild(msgDiv);
+            aiChatBody.scrollTop = aiChatBody.scrollHeight;
+        }
+
+        async function handleAiSend() {
+            const query = aiUserInput.value.trim();
+            if (!query) return;
+
+            appendMessage('user', query);
+            aiUserInput.value = '';
+
+            const loadingId = 'loading-' + Date.now();
+            appendMessage('bot', `<span id="${loadingId}"><i class="fa-solid fa-spinner fa-spin"></i> מנתח מענה מותאם...</span>`);
+
+            setTimeout(() => {
+                const reply = generateAdvisorResponse(query);
+                const loadingEl = document.getElementById(loadingId);
+                if (loadingEl && loadingEl.parentElement) {
+                    loadingEl.parentElement.innerHTML = reply;
+                }
+            }, 300);
+        }
+
+        function generateAdvisorResponse(query) {
+            const q = query.toLowerCase();
+
+            if (q.includes('hytera') || q.includes('הייטרה') || q.includes('מתחרים') || q.includes('מתחרה')) {
+                return `<strong>טיעון מנצח מול חלופות בשוק:</strong><br>
+                במקום להתמקד במחיר הרכישה הנקודתי, מומלץ למצב את מוטורולה סולושנס בארבעה צירים עיקריים:<br>
+                1. <strong>פיתוח קנייני מקצה לקצה:</strong> אנו היצרן והאינטגרטור כאחד.<br>
+                2. <strong>חסינות סייבר ותקנים:</strong> תאימות מלאה ל-NDAA והצפנת נתונים מחמירה.<br>
+                3. <strong>גב הנדסי ישראלי:</strong> מעבדה ומרכז פיתוח כחול-לבן 24/7.<br>
+                4. <strong>עלות כוללת (TCO):</strong> אמינות מוחלטת באפס תקלות והשבתות ברגעי חירום.`;
+            }
+
+            if (q.includes('מחיר') || q.includes('יקר') || q.includes('תקציב')) {
+                return `<strong>מענה להתנגדות מחיר:</strong><br>
+                המחיר משקף אפס פשרות על רציפות תפקודית וביטחון חיי אדם. פתרון זול שכושל ברגע אמת עולה לארגון פי כמה בנזק ישיר ובהשבתה תפעולית. אנו מציעים מוצר שמחזיק מעמד 7–10 שנים בתנאי שטח קיצוניים עם זמינות חלפים רציפה.`;
+            }
+
+            return `<strong>מענה יועץ שיווקי:</strong><br>
+            המפתח הוא חיבור האתגר המבצעי של הלקוח לאקו-סיסטם של מוטורולה סולושנס (קול, וידאו ואנליטיקה), תוך הדגשת הערך של "Solving for safer" – הגנה על אנשים, רכוש ומקומות ברציפות תפקודית מלאה.`;
+        }
+
+        // Initialize application on window load
+        window.onload = () => {
+            initLocalImage();
+            renderWheelOverlay();
+        };
+    </script>
+</body>
+</html>
