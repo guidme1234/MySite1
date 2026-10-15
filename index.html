@@ -2,16 +2,16 @@
 <html lang="he" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
     <title>Motorola Solutions Israel - 360° Sales Ecosystem</title>
 
-    <!-- Mobile PWA & iOS App Capabilities -->
+    <!-- Mobile PWA & iOS Capabilities -->
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Motorola 360">
     <meta name="theme-color" content="#005FBE">
-    <link rel="apple-touch-icon" href="https://lh3.googleusercontent.com/d/142l25B-rSH8alTS3n3o8Cb37wN9lEnmW">
+    <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/guidme1234/MySite1/refs/heads/master/msi-logo-rgb-h-public_pos-dark-blue-core.png">
     
     <!-- Google Fonts Heebo & Assistant -->
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800&family=Heebo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
@@ -24,7 +24,7 @@
             --moto-dark-blue: #004085;   /* 30% Dark Shade Blue */
             --moto-light-blue: #00A5E5;  /* Pantone 299 C - Tech Light Blue */
             --moto-gray: #1A1510;        /* Primary Text */
-            --moto-light-gray: #FAF5F0;  /* 10% Clean Background */
+            --moto-light-gray: #FAF5F0;  /* 10% Clean Neutral Background */
             --moto-card-border: #E2E8F0;
             --white: #FFFFFF;
             --shadow-sm: 0 2px 6px rgba(0,0,0,0.06);
@@ -35,12 +35,20 @@
             --radius-lg: 18px;
         }
 
-        * {
+        *, *::before, *::after {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Heebo', 'Assistant', sans-serif;
+            font-family: 'Heebo', 'Assistant', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
+            -webkit-text-size-adjust: 100%;
+            touch-action: manipulation;
         }
 
         body {
@@ -49,12 +57,16 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            min-height: 100dvh;
             direction: rtl;
         }
 
         header {
             background-color: var(--white);
             padding: 12px 24px;
+            padding-top: max(12px, env(safe-area-inset-top));
+            padding-left: max(16px, env(safe-area-inset-left));
+            padding-right: max(16px, env(safe-area-inset-right));
             box-shadow: var(--shadow-sm);
             position: sticky;
             top: 0;
@@ -63,19 +75,21 @@
             align-items: center;
             justify-content: space-between;
             border-bottom: 3px solid var(--moto-light-blue);
+            gap: 12px;
         }
 
         .logo-container {
             display: flex;
             align-items: center;
             cursor: pointer;
-            min-height: 40px;
+            min-height: 38px;
+            flex-shrink: 0;
         }
 
         .moto-logo-img {
-            height: 38px;
+            height: 36px;
             width: auto;
-            max-width: 310px;
+            max-width: min(280px, 60vw);
             object-fit: contain;
             display: block;
         }
@@ -92,6 +106,7 @@
             gap: 6px;
             letter-spacing: 0.4px;
             white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .main-container {
@@ -118,15 +133,19 @@
 
         .wheel-img-wrapper {
             width: 100%;
-            max-width: 580px;
+            max-width: min(580px, 92vw);
             border-radius: 50%;
             box-shadow: var(--shadow-lg);
             background: var(--white);
             padding: 8px;
             border: 3px solid rgba(0, 165, 229, 0.45);
             position: relative;
-            transition: all 0.3s ease;
+            transition: box-shadow 0.3s ease, border-color 0.3s ease;
             box-sizing: border-box;
+            aspect-ratio: 1 / 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .wheel-img-wrapper:hover {
@@ -137,7 +156,7 @@
         .wheel-img-container {
             position: relative;
             width: 100%;
-            aspect-ratio: 1 / 1;
+            height: 100%;
             border-radius: 50%;
             overflow: hidden;
             background: var(--white);
@@ -191,14 +210,17 @@
             box-shadow: 0 6px 18px rgba(0, 64, 133, 0.25);
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 10px;
             border: 2px solid var(--white);
             text-align: center;
+            width: 100%;
+            max-width: min(580px, 92vw);
         }
 
         .search-container {
             width: 100%;
-            max-width: 580px;
+            max-width: min(580px, 92vw);
             position: relative;
             margin-top: 4px;
         }
@@ -215,18 +237,19 @@
             transform: translateY(-50%);
             color: #94A3B8;
             font-size: 15px;
+            pointer-events: none;
         }
 
         .search-input {
             width: 100%;
-            padding: 11px 44px 11px 16px;
+            padding: 12px 44px 12px 16px;
             border-radius: 30px;
             border: 1px solid #CBD5E1;
             font-size: 14px;
             outline: none;
             background: var(--white);
             box-shadow: var(--shadow-sm);
-            transition: all 0.2s ease;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
         }
 
         .search-input:focus {
@@ -244,13 +267,14 @@
             box-shadow: var(--shadow-lg);
             border: 1px solid var(--moto-card-border);
             z-index: 40;
-            max-height: 290px;
+            max-height: min(290px, 45vh);
             overflow-y: auto;
             display: none;
+            -webkit-overflow-scrolling: touch;
         }
 
         .search-result-item {
-            padding: 11px 16px;
+            padding: 12px 16px;
             border-bottom: 1px solid #F1F5F9;
             cursor: pointer;
             display: flex;
@@ -259,6 +283,7 @@
             font-size: 13.5px;
             font-weight: 600;
             transition: background 0.15s;
+            min-height: 44px;
         }
 
         .search-result-item:hover {
@@ -280,7 +305,6 @@
             margin-top: 4px;
         }
 
-        /* Modal Dialog Styling */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -289,6 +313,7 @@
             height: 100%;
             background-color: rgba(0, 40, 85, 0.76);
             backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
             z-index: 100;
             display: flex;
             align-items: center;
@@ -297,6 +322,7 @@
             visibility: hidden;
             transition: opacity 0.25s ease, visibility 0.25s ease;
             padding: 16px;
+            padding-bottom: max(16px, env(safe-area-inset-bottom));
         }
 
         .modal-overlay.active {
@@ -309,6 +335,7 @@
             width: 100%;
             max-width: 600px;
             max-height: 90vh;
+            max-height: 90dvh;
             border-radius: var(--radius-lg);
             overflow: hidden;
             display: flex;
@@ -330,6 +357,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            gap: 12px;
         }
 
         .modal-header-title {
@@ -338,6 +366,7 @@
             gap: 12px;
             font-size: 17.5px;
             font-weight: 800;
+            min-width: 0;
         }
 
         .modal-icon-box {
@@ -349,13 +378,14 @@
             align-items: center;
             justify-content: center;
             font-size: 16px;
+            flex-shrink: 0;
         }
 
         .close-btn {
             background: rgba(255,255,255,0.2);
             border: none;
-            width: 32px;
-            height: 32px;
+            width: 34px;
+            height: 34px;
             border-radius: 50%;
             font-size: 16px;
             color: var(--white);
@@ -364,6 +394,7 @@
             align-items: center;
             justify-content: center;
             transition: background 0.2s;
+            flex-shrink: 0;
         }
 
         .close-btn:hover {
@@ -377,11 +408,12 @@
             display: flex;
             flex-direction: column;
             gap: 14px;
+            -webkit-overflow-scrolling: touch;
         }
 
         .m-desc {
             font-size: 13.5px;
-            line-height: 1.5;
+            line-height: 1.55;
             color: var(--moto-gray);
             background: rgba(0, 95, 190, 0.05);
             padding: 12px 14px;
@@ -396,6 +428,8 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 6px;
         }
 
         .subcat-header {
@@ -422,12 +456,13 @@
             display: flex;
             align-items: center;
             justify-content: flex-start;
-            padding: 9px 12px;
+            padding: 10px 12px;
             background-color: #F8FAFC;
             border-radius: var(--radius-sm);
             border: 1px solid var(--moto-card-border);
             gap: 10px;
             transition: background 0.15s, border-color 0.15s;
+            min-height: 44px;
         }
 
         .link-item-row:hover {
@@ -444,7 +479,7 @@
         }
 
         .link-type-icon {
-            font-size: 14px;
+            font-size: 15px;
             flex-shrink: 0;
         }
         .type-pdf { color: #EA4335; }
@@ -459,6 +494,7 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            padding: 4px 0;
         }
 
         .link-label:hover {
@@ -466,8 +502,8 @@
         }
 
         .link-checkbox {
-            width: 17px;
-            height: 17px;
+            width: 19px;
+            height: 19px;
             accent-color: var(--moto-blue);
             cursor: pointer;
             flex-shrink: 0;
@@ -480,10 +516,12 @@
             padding: 2px 8px;
             border-radius: 10px;
             font-weight: 600;
+            flex-shrink: 0;
         }
 
         .modal-footer {
             padding: 14px 20px;
+            padding-bottom: max(14px, env(safe-area-inset-bottom));
             background-color: #F8FAFC;
             border-top: 1px solid #E2E8F0;
             display: flex;
@@ -501,16 +539,17 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 11px 14px;
+            padding: 12px 14px;
             border-radius: var(--radius-sm);
             font-size: 13.5px;
             font-weight: 700;
             gap: 8px;
-            transition: all 0.2s;
+            transition: background 0.2s, transform 0.15s;
             text-decoration: none;
             border: none;
             cursor: pointer;
             white-space: nowrap;
+            min-height: 44px;
         }
 
         .btn-whatsapp {
@@ -529,11 +568,10 @@
             background-color: #D32F2F;
         }
 
-        /* AI Copilot Floating Button & Chat Drawer */
         .ai-fab-btn {
             position: fixed;
-            bottom: 24px;
-            left: 24px;
+            bottom: max(20px, env(safe-area-inset-bottom));
+            left: max(20px, env(safe-area-inset-left));
             background: linear-gradient(135deg, #005FBE 0%, #004085 100%);
             color: var(--white);
             border: 2px solid rgba(255, 255, 255, 0.9);
@@ -548,12 +586,15 @@
             cursor: pointer;
             z-index: 90;
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            min-height: 44px;
         }
+
         .ai-fab-btn:hover {
             transform: scale(1.05) translateY(-3px);
             box-shadow: 0 14px 30px rgba(0, 95, 190, 0.6);
             background: linear-gradient(135deg, #00A5E5 0%, #005FBE 100%);
         }
+
         .ai-pulse-dot {
             width: 9px;
             height: 9px;
@@ -561,7 +602,9 @@
             background-color: #25D366;
             box-shadow: 0 0 10px #25D366;
             animation: pulseDot 1.8s infinite;
+            flex-shrink: 0;
         }
+
         @keyframes pulseDot {
             0%, 100% { opacity: 1; transform: scale(1); }
             50% { opacity: 0.4; transform: scale(1.3); }
@@ -576,6 +619,7 @@
             height: 100%;
             background-color: rgba(0, 40, 85, 0.78);
             backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
             z-index: 120;
             display: flex;
             align-items: center;
@@ -584,16 +628,20 @@
             visibility: hidden;
             transition: opacity 0.25s ease, visibility 0.25s ease;
             padding: 16px;
+            padding-bottom: max(16px, env(safe-area-inset-bottom));
         }
+
         .ai-modal-overlay.active {
             opacity: 1;
             visibility: visible;
         }
+
         .ai-chat-window {
             background-color: var(--white);
             width: 100%;
             max-width: 650px;
             height: 80vh;
+            height: 80dvh;
             max-height: 750px;
             border-radius: var(--radius-lg);
             overflow: hidden;
@@ -604,6 +652,7 @@
             box-shadow: 0 25px 60px rgba(0, 40, 85, 0.4);
             border: 1px solid rgba(0, 95, 190, 0.2);
         }
+
         .ai-modal-overlay.active .ai-chat-window {
             transform: scale(1) translateY(0);
         }
@@ -616,12 +665,16 @@
             align-items: center;
             justify-content: space-between;
             border-bottom: 2px solid var(--moto-light-blue);
+            gap: 10px;
         }
+
         .ai-header-info {
             display: flex;
             align-items: center;
             gap: 12px;
+            min-width: 0;
         }
+
         .ai-badge-icon {
             width: 38px;
             height: 38px;
@@ -632,7 +685,9 @@
             justify-content: center;
             font-size: 17px;
             color: #A6D1FF;
+            flex-shrink: 0;
         }
+
         .ai-chat-body {
             flex: 1;
             padding: 18px 20px;
@@ -641,9 +696,9 @@
             flex-direction: column;
             gap: 14px;
             background-color: #FAF5F0;
+            -webkit-overflow-scrolling: touch;
         }
 
-        /* Message Bubbles */
         .ai-msg {
             max-width: 88%;
             padding: 12px 16px;
@@ -652,6 +707,7 @@
             line-height: 1.55;
             word-wrap: break-word;
         }
+
         .ai-msg-bot {
             align-self: flex-start;
             background-color: var(--white);
@@ -659,6 +715,7 @@
             border-right: 4px solid var(--moto-blue);
             box-shadow: var(--shadow-sm);
         }
+
         .ai-msg-user {
             align-self: flex-end;
             background: linear-gradient(135deg, #005FBE 0%, #004085 100%);
@@ -667,15 +724,16 @@
             box-shadow: 0 4px 12px rgba(0, 95, 190, 0.25);
         }
 
-        /* Chat Input Bar */
         .ai-chat-footer {
             padding: 12px 18px;
+            padding-bottom: max(12px, env(safe-area-inset-bottom));
             background-color: var(--white);
             border-top: 1px solid #E2E8F0;
             display: flex;
             align-items: center;
             gap: 10px;
         }
+
         .ai-input-box {
             flex: 1;
             padding: 12px 16px;
@@ -686,10 +744,12 @@
             transition: border-color 0.2s, box-shadow 0.2s;
             background: #FFFFFF;
         }
+
         .ai-input-box:focus {
             border-color: var(--moto-blue);
             box-shadow: 0 0 0 3px rgba(0, 95, 190, 0.15);
         }
+
         .ai-send-btn {
             background-color: var(--moto-blue);
             color: var(--white);
@@ -705,9 +765,83 @@
             transition: all 0.2s;
             flex-shrink: 0;
         }
+
         .ai-send-btn:hover {
             background-color: var(--moto-dark-blue);
             transform: scale(1.05);
+        }
+
+        @media (max-width: 640px) {
+            header {
+                padding: 10px 14px;
+            }
+            .moto-logo-img {
+                height: 30px;
+                max-width: 180px;
+            }
+            .brand-badge {
+                font-size: 11px;
+                padding: 5px 10px;
+            }
+            .main-container {
+                padding: 14px 10px 28px 10px;
+                gap: 12px;
+            }
+            .hero-floating-badge {
+                font-size: 13px;
+                padding: 8px 14px;
+                margin-top: 14px;
+                border-radius: 24px;
+            }
+            .modal-content {
+                max-height: 92vh;
+                max-height: 92dvh;
+                border-radius: var(--radius-md);
+            }
+            .modal-header {
+                padding: 14px 16px;
+            }
+            .modal-header-title {
+                font-size: 15px;
+            }
+            .modal-body {
+                padding: 14px 16px;
+            }
+            .ai-fab-btn {
+                bottom: max(14px, env(safe-area-inset-bottom));
+                left: max(14px, env(safe-area-inset-left));
+                padding: 10px 16px;
+                font-size: 13px;
+            }
+            .ai-chat-window {
+                height: 88vh;
+                height: 88dvh;
+                border-radius: var(--radius-md);
+            }
+            .ai-chat-header {
+                padding: 12px 14px;
+            }
+            .ai-chat-body {
+                padding: 14px 16px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .actions-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero-floating-badge {
+                font-size: 12px;
+                padding: 8px 10px;
+            }
+            .moto-logo-img {
+                height: 26px;
+                max-width: 150px;
+            }
+            .brand-badge {
+                font-size: 10px;
+                padding: 4px 8px;
+            }
         }
     </style>
 </head>
@@ -715,7 +849,7 @@
 
     <header>
         <div class="logo-container" onclick="document.getElementById('localLogoInput').click()" title="לחצו להעלאת קובץ לוגו מהמכשיר לשמירה קבועה">
-            <!-- Official Motorola Solutions Header Logo -->
+            <!-- Official Motorola Solutions Header Logo from Drive CDN -->
             <img src="https://raw.githubusercontent.com/guidme1234/MySite1/refs/heads/master/msi-logo-rgb-h-public_pos-dark-blue-core.png" id="motoHeaderLogo" alt="Motorola Solutions Logo" class="moto-logo-img" referrerpolicy="no-referrer">
         </div>
         <input type="file" id="localLogoInput" accept="image/*" style="display:none;" onchange="handleLocalLogoUpload(event)">
@@ -729,7 +863,7 @@
         <div class="visual-section">
             <div class="wheel-img-wrapper">
                 <div class="wheel-img-container">
-                    <!-- 360 Ecosystem Graphic Image -->
+                    <!-- 360 Ecosystem Graphic Image with Multi-CDN Fallback & Zero CORS Conflict -->
                     <img src="https://raw.githubusercontent.com/guidme1234/MySite1/refs/heads/master/360_Sales.png" 
                          id="wheelImg" 
                          alt="Motorola Solutions 360 Ecosystem" 
@@ -823,7 +957,7 @@
                         <i class="fa-solid fa-brain"></i>
                     </div>
                     <div>
-                        <div style="font-weight: 800; font-size: 16px;">יועץ מכירות Motorola Solutions ISAREL</div>
+                        <div style="font-weight: 800; font-size: 16px;">יועץ מכירות Motorola Solutions ISRAEL</div>
                         <div style="font-size: 11.5px; opacity: 0.9; font-weight: 400;">הכנה לפגישות, פיצוח התנגדויות, ניסוח פניות ועוד</div>
                     </div>
                 </div>
@@ -840,7 +974,7 @@
             </div>
 
             <div class="ai-chat-footer">
-                <input type="text" id="aiUserInput" class="ai-input-box" placeholder="" onkeydown="if(event.key === 'Enter') handleAiSend()">
+                <input type="text" id="aiUserInput" class="ai-input-box" placeholder="שאל שאלה חופשית..." onkeydown="if(event.key === 'Enter') handleAiSend()">
                 <button class="ai-send-btn" id="aiSendBtn" onclick="handleAiSend()" title="שלח שאלה">
                     <i class="fa-solid fa-paper-plane"></i>
                 </button>
@@ -852,9 +986,9 @@
         // Multi-CDN error handler for mobile browsers & iFrames
         function handleWheelImgError(img) {
             const fallbackChain = [
+                "https://raw.githubusercontent.com/guidme1234/MySite1/refs/heads/master/360_Sales.png",
                 "https://drive.google.com/thumbnail?id=142l25B-rSH8alTS3n3o8Cb37wN9lEnmW&sz=w1200",
-                "https://docs.google.com/uc?export=view&id=142l25B-rSH8alTS3n3o8Cb37wN9lEnmW",
-                "https://drive.google.com/uc?id=142l25B-rSH8alTS3n3o8Cb37wN9lEnmW"
+                "https://docs.google.com/uc?export=view&id=142l25B-rSH8alTS3n3o8Cb37wN9lEnmW"
             ];
             let step = parseInt(img.dataset.step || "0", 10);
             if (step < fallbackChain.length) {
@@ -1022,7 +1156,6 @@
 
         let activeData = null;
 
-        // Initialize local images from device memory
         function initLocalImage() {
             try {
                 const savedImg = localStorage.getItem('moto_wheel_img');
@@ -1043,7 +1176,6 @@
             } catch(e) {}
         }
 
-        // Handle user upload of custom logo file
         function handleLocalLogoUpload(event) {
             const file = event.target.files[0];
             if (!file) return;
@@ -1184,7 +1316,7 @@
                         <div class="link-info">
                             <i class="fa-solid ${iconClass} link-type-icon"></i>
                             ${hasLink ? 
-                                `<a href="${item.url}" target="_blank" class="link-label" title="${item.title}">${item.title}</a>` :
+                                `<a href="${item.url}" target="_blank" rel="noopener noreferrer" class="link-label" title="${item.title}">${item.title}</a>` :
                                 `<span class="link-label" style="color:#94A3B8; cursor:default;">${item.title}</span> <span class="soon-tag">בקרוב</span>`
                             }
                         </div>
@@ -1237,7 +1369,7 @@
 
         function closeModal() {
             modalOverlay.classList.remove('active');
-            document.body.style.overflow = 'auto';
+            document.body.style.overflow = '';
         }
 
         closeModalBtn.addEventListener('click', closeModal);
@@ -1270,7 +1402,7 @@
             });
 
             if (results.length === 0) {
-                dropdown.innerHTML = `<div style="padding:12px; color:#94A3B8; text-align:center; font-size:13px;">לא נמצאו תוצאות עבור "${val}"</div>`;
+                dropdown.innerHTML = `<div style="padding:14px; color:#94A3B8; text-align:center; font-size:13px;">לא נמצאו תוצאות עבור "${val}"</div>`;
                 dropdown.style.display = 'block';
                 return;
             }
@@ -1305,7 +1437,6 @@
             }
         });
 
-        // Chat UI references
         const openAiChatBtn = document.getElementById('openAiChatBtn');
         const closeAiChatBtn = document.getElementById('closeAiChatBtn');
         const aiModalOverlay = document.getElementById('aiModalOverlay');
@@ -1320,7 +1451,7 @@
 
         function closeAiChat() {
             aiModalOverlay.classList.remove('active');
-            document.body.style.overflow = 'auto';
+            document.body.style.overflow = '';
         }
 
         openAiChatBtn.addEventListener('click', openAiChat);
@@ -1359,7 +1490,7 @@
         function generateAdvisorResponse(query) {
             const q = query.toLowerCase();
 
-            if (q.includes('hytera') || q.includes('הייטרה') || q.includes('מתחרים') || q.includes('מתחרה')) {
+            if (q.includes('hytera') || q.includes('הייטרה') || q.includes('מתחרים') || q.includes('מתחרה') || q.includes('sepura') || q.includes('ספורה') || q.includes('hikvision') || q.includes('היקוויז')) {
                 return `<strong>טיעון מנצח מול חלופות בשוק:</strong><br>
                 במקום להתמקד במחיר הרכישה הנקודתי, מומלץ למצב את מוטורולה סולושנס בארבעה צירים עיקריים:<br>
                 1. <strong>פיתוח קנייני מקצה לקצה:</strong> אנו היצרן והאינטגרטור כאחד.<br>
@@ -1368,16 +1499,30 @@
                 4. <strong>עלות כוללת (TCO):</strong> אמינות מוחלטת באפס תקלות והשבתות ברגעי חירום.`;
             }
 
-            if (q.includes('מחיר') || q.includes('יקר') || q.includes('תקציב')) {
+            if (q.includes('מחיר') || q.includes('יקר') || q.includes('תקציב') || q.includes('עלות') || q.includes('הנחה')) {
                 return `<strong>מענה להתנגדות מחיר:</strong><br>
                 המחיר משקף אפס פשרות על רציפות תפקודית וביטחון חיי אדם. פתרון זול שכושל ברגע אמת עולה לארגון פי כמה בנזק ישיר ובהשבתה תפעולית. אנו מציעים מוצר שמחזיק מעמד 7–10 שנים בתנאי שטח קיצוניים עם זמינות חלפים רציפה.`;
+            }
+
+            if (q.includes('בנייה') || q.includes('בניה') || q.includes('קבלן') || q.includes('אתר')) {
+                return `<strong>התאמה לסגמנט הבנייה והתשתיות:</strong><br>
+                1. <strong>פתרון WAVE PTX:</strong> קישוריות ארצית מיידית ללא צורך בהקמת ממסרים או תשתיות מורכבות באתר.<br>
+                2. <strong>מכשירי TLK110 מוקשחים:</strong> עמידות מחמירה לאבק ולמים (IP68) וביטול רעשים מבוסס AI המאפשר שמיעה צלולה גם בסמוך לכלי צמ"ה כבדים.<br>
+                3. <strong>שליטה על ציוד ואבטחה:</strong> אינטגרציה עם מצלמות Avigilon ובקרת כניסה למניעת גניבות חומרי גלם וציוד הנדסי.`;
             }
 
             return `<strong>מענה יועץ שיווקי:</strong><br>
             המפתח הוא חיבור האתגר המבצעי של הלקוח לאקו-סיסטם של מוטורולה סולושנס (קול, וידאו ואנליטיקה), תוך הדגשת הערך של "Solving for safer" – הגנה על אנשים, רכוש ומקומות ברציפות תפקודית מלאה.`;
         }
 
-        // Initialize application on window load
+        window.addEventListener('resize', () => {
+            // Re-check and optimize SVG overlay scaling if viewport changes
+            const wrapper = document.querySelector('.wheel-img-wrapper');
+            if (wrapper) {
+                wrapper.style.aspectRatio = '1 / 1';
+            }
+        });
+
         window.onload = () => {
             initLocalImage();
             renderWheelOverlay();
